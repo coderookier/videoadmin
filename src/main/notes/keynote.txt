@@ -1,0 +1,3 @@
+使用Zookeeper，SpringBoot监听实现Bgm下载到服务器中
+
+用户访问的是SpringBoot实现的小程序后端，管理员访问的是SSM实现的小程序后台管理，管理员上传Bgm后，通过Zookeeper，SpringBoot监听实现自动下载
