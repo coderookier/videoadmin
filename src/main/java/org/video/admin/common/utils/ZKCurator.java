@@ -19,7 +19,7 @@ public class ZKCurator {
         this.client = client;
     }
 
-    final static Logger log = LoggerFactory.getLogger(ZKCurator.class);
+    final static Logger logger = LoggerFactory.getLogger(ZKCurator.class);
 
     public void init() {
         //判断在admin命名空间下是否有bgm节点 /admin/bgm
@@ -35,11 +35,28 @@ public class ZKCurator {
                         .withMode(CreateMode.PERSISTENT) //节点类型：持久节点
                         .withACL(ZooDefs.Ids.OPEN_ACL_UNSAFE) //acl: 匿名权限
                         .forPath("/bgm");
-                System.out.println("初始化成功");
-                System.out.println("zookeeper服务器状态" + client.isStarted());
+                logger.info("初始化成功");
+                logger.info("zookeeper服务器已经开启：{}", client.isStarted());
             }
         } catch (Exception e) {
-            log.error("zookeeper客户端连接初始化错误");
+            logger.error("zookeeper客户端连接初始化错误");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 增加或者删除bgm，向zk-server创建子节点，供小程序后端监听
+     * @param bgmId 背景音乐唯一主键ID
+     * @param operObj 操作类型，添加或者删除bgm
+     */
+    public void sendBgmOperator(String bgmId, String operObj) {
+        try {
+
+            client.create().creatingParentsIfNeeded()
+                    .withMode(CreateMode.PERSISTENT)		// 节点类型：持久节点
+                    .withACL(ZooDefs.Ids.OPEN_ACL_UNSAFE)			// acl：匿名权限
+                    .forPath("/bgm/" + bgmId, operObj.getBytes());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

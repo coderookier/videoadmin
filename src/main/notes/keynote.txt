@@ -1,3 +1,9 @@
 使用Zookeeper，SpringBoot监听实现Bgm下载到服务器中
 
 用户访问的是SpringBoot实现的小程序后端，管理员访问的是SSM实现的小程序后台管理，管理员上传Bgm后，通过Zookeeper，SpringBoot监听实现自动下载
+
+管理后台上传或者删除bgm时，根据bgmId和操作类型（1代表添加，2代表删除），通过zookeeper客户端在zookeeper服务器创建新的节点，小程序后端通过监听，
+实现对bgm的自动下载和删除
+
+对bgm删除时，需要对bgmId进行保存处理，否则小程序后端的springboot监听永远无法得到bgmId对应路径
+通过hashmap保存操作类型和bgm路径，并转为json对象
