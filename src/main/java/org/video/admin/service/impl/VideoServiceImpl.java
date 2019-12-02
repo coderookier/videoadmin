@@ -16,9 +16,12 @@ import org.video.admin.common.utils.JsonUtils;
 import org.video.admin.common.utils.PagedResult;
 import org.video.admin.common.utils.ZKCurator;
 import org.video.admin.mapper.BgmMapper;
+import org.video.admin.mapper.UsersReportMapperCustom;
 import org.video.admin.mapper.VideosMapper;
 import org.video.admin.pojo.Bgm;
 import org.video.admin.pojo.BgmExample;
+import org.video.admin.pojo.Videos;
+import org.video.admin.pojo.vo.Reports;
 import org.video.admin.service.VideoService;
 
 
@@ -36,6 +39,9 @@ public class VideoServiceImpl implements VideoService {
 
 	@Autowired
 	private ZKCurator zkCurator;
+
+	@Autowired
+	private UsersReportMapperCustom usersReportMapperCustom;
 
 	@Override
 	public PagedResult queryBgmList(Integer page, Integer pageSize) {
@@ -83,4 +89,24 @@ public class VideoServiceImpl implements VideoService {
 
 	}
 
+	@Override
+	public PagedResult queryReportList(Integer page, int pageSize) {
+		PageHelper.startPage(page, pageSize);
+		List<Reports> reportsList = usersReportMapperCustom.selectAllVideoReport();
+		PageInfo<Reports> pageList = new PageInfo<>(reportsList);
+		PagedResult grid = new PagedResult();
+		grid.setTotal(pageList.getPages());
+		grid.setRows(reportsList);
+		grid.setPage(page);
+		grid.setRecords(pageList.getTotal());
+		return grid;
+	}
+
+	@Override
+	public void updateVideoStatus(String videoId, int value) {
+		Videos videos = new Videos();
+		videos.setId(videoId);
+		videos.setStatus(value);
+		videosMapper.updateByPrimaryKeySelective(videos);
+	}
 }

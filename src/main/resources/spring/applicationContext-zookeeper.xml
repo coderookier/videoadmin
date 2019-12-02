@@ -24,7 +24,7 @@
 	<!-- 创建zookeeper客户端 -->
 	<bean id="client" class="org.apache.curator.framework.CuratorFrameworkFactory"
 		  factory-method="newClient" init-method="start">
-		<constructor-arg index="0" value="121.248.55.164:2181"></constructor-arg>
+		<constructor-arg index="0" value="121.248.50.82:2181"></constructor-arg>
 		<constructor-arg index="1" value="100000"></constructor-arg>
 		<constructor-arg index="2" value="100000"></constructor-arg>
 		<constructor-arg index="3" ref="retryPolicy"></constructor-arg>

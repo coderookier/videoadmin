@@ -31,14 +31,6 @@ public class VideoController {
 	/**
 	 * menu.jsp中访问
 	 */
-	@GetMapping("/showReportList")
-	public String showReportList() {
-		return "video/reportList";
-	}
-
-	/**
-	 * menu.jsp中访问
-	 */
 	@GetMapping("/showBgmList")
 	public String showBgmList() {
 		return "video/bgmList";
@@ -121,6 +113,25 @@ public class VideoController {
 		}
 		
 		return IMoocJSONResult.ok(uploadPathDB);
+	}
+
+	@GetMapping("/showReportList")
+	public String showReportList() {
+		return "video/reportList";
+	}
+
+	@PostMapping("/reportList")
+	@ResponseBody
+	public PagedResult reportList(Integer page) {
+		PagedResult result = videoService.queryReportList(page, 10);
+		return result;
+	}
+
+	@PostMapping("/forbidVideo")
+	@ResponseBody
+	public IMoocJSONResult forbidVideo(String videoId) {
+		videoService.updateVideoStatus(videoId, VideoStatusEnum.FORBID.value);
+		return IMoocJSONResult.ok();
 	}
 	
 }

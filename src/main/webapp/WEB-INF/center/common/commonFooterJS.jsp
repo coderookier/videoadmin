@@ -9,8 +9,8 @@
 
 <!-- 上下文对象路径 -->
 <input type="hidden" id="hdnContextPath" name="hdnContextPath" value="<%=request.getContextPath() %>"/>
-<input type="hidden" id="apiServer" name="apiServer" value="http://10.203.145.225:6310"/>
-<input type="hidden" id="bgmServer" name="bgmServer" value="http://10.203.145.225:8080/mvc"/>
+<input type="hidden" id="apiServer" name="apiServer" value="http://121.248.52.139:6310"/>
+<input type="hidden" id="bgmServer" name="bgmServer" value="http://121.248.52.139:8080/mvc"/>
 
 
 
